@@ -13,5 +13,13 @@
 	<string>$(API_KEY)</string>
 	<key>ImageBaseURL</key>
 	<string>$(IMAGE_BASE_URL)</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Montserrat-Regular.ttf</string>
+		<string>Montserrat-SemiBold.ttf</string>
+		<string>Montserrat-Thin.ttf</string>
+		<string>Montserrat-Medium.ttf</string>
+		<string>Montserrat-Bold.ttf</string>
+	</array>
 </dict>
 </plist>

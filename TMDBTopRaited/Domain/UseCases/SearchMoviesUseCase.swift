@@ -29,14 +29,13 @@ final class DefaultSearchMoviesUseCase: SearchMoviesUseCase {
     ) -> Cancellable? {
 
         return moviesRepository.fetchMoviesList(
-            query: requestValue.query,
             page: requestValue.page,
             cached: cached,
             completion: { result in
 
-            if case .success = result {
-                self.moviesQueriesRepository.saveRecentQuery(query: requestValue.query) { _ in }
-            }
+//            if case .success = result {
+//                self.moviesQueriesRepository.saveRecentQuery(query: requestValue.query) { _ in }
+//            }
 
             completion(result)
         })
@@ -44,6 +43,5 @@ final class DefaultSearchMoviesUseCase: SearchMoviesUseCase {
 }
 
 struct SearchMoviesUseCaseRequestValue {
-    let query: MovieQuery
     let page: Int
 }

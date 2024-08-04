@@ -22,7 +22,6 @@ final class DefaultMoviesRepository {
 extension DefaultMoviesRepository: MoviesRepository {
     
     func fetchMoviesList(
-        query: MovieQuery,
         page: Int,
         cached: @escaping (MoviesPage) -> Void,
         completion: @escaping (Result<MoviesPage, Error>) -> Void
