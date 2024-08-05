@@ -1,15 +1,13 @@
-/* 
-  Localizable.strings
-  App
 
-  Created by Oleh Kudinov on 01.12.19.
-  
-*/
 
 "Movies" = "Movies";
 "Raiting" = "Raiting";
 "Release Date" = "Release Date";
 "To be announced" = "To be announced";
 "Error" = "Error";
+"Like" = "Like";
+"Like Movie" = "Movie was added to like list (this copy is only for simulate action)";
+"Done" = "Done";
+"TMDBApp" = "TMDBApp";
 "No internet connection" = "No internet connection";
 "Failed loading movies" = "Failed loading movies";

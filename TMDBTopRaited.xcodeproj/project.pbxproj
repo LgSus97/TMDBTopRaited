@@ -72,6 +72,9 @@
 		0350119F2C6053C0002048FA /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 035011882C5F67D5002048FA /* Montserrat-Regular.ttf */; };
 		035011A02C6053C0002048FA /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 035011872C5F67D5002048FA /* Montserrat-SemiBold.ttf */; };
 		035011A12C6053C0002048FA /* Montserrat-Thin.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 035011852C5F67D5002048FA /* Montserrat-Thin.ttf */; };
+		035011A32C612472002048FA /* UIView+Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035011A22C612472002048FA /* UIView+Haptic.swift */; };
+		035011A62C61270D002048FA /* TMDBModal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035011A52C61270D002048FA /* TMDBModal.swift */; };
+		035011A82C612840002048FA /* ModalHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035011A72C612840002048FA /* ModalHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -163,6 +166,9 @@
 		035011932C5F6CFD002048FA /* String+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extensions.swift"; sourceTree = "<group>"; };
 		035011952C60217B002048FA /* DetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewController.swift; sourceTree = "<group>"; };
 		0350119B2C6022A2002048FA /* MovieDetailsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewModel.swift; sourceTree = "<group>"; };
+		035011A22C612472002048FA /* UIView+Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Haptic.swift"; sourceTree = "<group>"; };
+		035011A52C61270D002048FA /* TMDBModal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TMDBModal.swift; sourceTree = "<group>"; };
+		035011A72C612840002048FA /* ModalHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModalHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -499,6 +505,7 @@
 				0350118F2C5F69C6002048FA /* UILabel+Extensions.swift */,
 				035011912C5F6B61002048FA /* UIFont+Extensions.swift */,
 				035011932C5F6CFD002048FA /* String+Extensions.swift */,
+				035011A22C612472002048FA /* UIView+Haptic.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -535,6 +542,7 @@
 		035011752C5F5CAE002048FA /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				035011A42C6126E7002048FA /* Alert */,
 				035011762C5F62F6002048FA /* Cells */,
 			);
 			path = Common;
@@ -583,6 +591,15 @@
 				0350119B2C6022A2002048FA /* MovieDetailsViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		035011A42C6126E7002048FA /* Alert */ = {
+			isa = PBXGroup;
+			children = (
+				035011A52C61270D002048FA /* TMDBModal.swift */,
+				035011A72C612840002048FA /* ModalHelper.swift */,
+			);
+			path = Alert;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -732,9 +749,11 @@
 				0350113C2C5F1987002048FA /* DefaultMoviesRepository.swift in Sources */,
 				035011342C5F1987002048FA /* AppDIContainer.swift in Sources */,
 				035011962C60217B002048FA /* DetailsViewController.swift in Sources */,
+				035011A32C612472002048FA /* UIView+Haptic.swift in Sources */,
 				035011592C5F1987002048FA /* Cancellable.swift in Sources */,
 				035011922C5F6B61002048FA /* UIFont+Extensions.swift in Sources */,
 				0350116E2C5F2335002048FA /* UIVIew+Anchors.swift in Sources */,
+				035011A62C61270D002048FA /* TMDBModal.swift in Sources */,
 				0350112D2C5F1987002048FA /* MovieQuery.swift in Sources */,
 				0350112A2C5F1987002048FA /* UseCase.swift in Sources */,
 				035011582C5F1987002048FA /* ConnectionError.swift in Sources */,
@@ -770,6 +789,7 @@
 				0350114B2C5F1987002048FA /* TopRaitedViewModel.swift in Sources */,
 				0350116A2C5F1DE8002048FA /* DataTransferError+ConnectionError.swift in Sources */,
 				0350115B2C5F1BE3002048FA /* AppFlowCoordinator.swift in Sources */,
+				035011A82C612840002048FA /* ModalHelper.swift in Sources */,
 				0350113F2C5F1987002048FA /* CoreDataMoviesResponseStorage.swift in Sources */,
 				0350114A2C5F1987002048FA /* NetworkConfig.swift in Sources */,
 				035011572C5F1987002048FA /* DispatchQueueType.swift in Sources */,
@@ -969,6 +989,7 @@
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1000,6 +1021,7 @@
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

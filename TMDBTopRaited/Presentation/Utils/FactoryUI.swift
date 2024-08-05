@@ -52,13 +52,36 @@ class LabelFactory: UIComponent {
 }
 
 class ButtonFactory: UIComponent {
-    func create() -> UIView {
-        let button = UIButton()
-        button.setTitle("Button", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.backgroundColor = .lightGray
-        return button
+  private let withMessage: String
+  private let iconName: String?
+  
+  init(
+    withMessage text: String = "",
+    iconName: String? = nil
+  ) {
+    self.withMessage = text
+    self.iconName = iconName
+  }
+  
+  func create() -> UIView {
+    let button = UIButton()
+    button.translatesAutoresizingMaskIntoConstraints = false
+    button.setTitle(withMessage, for: .normal)
+    button.titleLabel?.setMontserratFont(style: .bold, size: 18, color: STColors.cleanWhite)
+    button.backgroundColor = STColors.stormySea
+    button.layer.cornerRadius = 25
+    button.heightAnchor.constraint(equalToConstant: 50).isActive = true
+    
+    if let iconName = self.iconName, let iconImage = UIImage(systemName: iconName) {
+      button.setImage(iconImage, for: .normal)
+      button.imageView?.contentMode = .scaleAspectFit
+      //button.imageView?.backgroundColor = STColors.cleanWhite
+      button.tintColor = STColors.cleanWhite
+      button.titleEdgeInsets = UIEdgeInsets(top: 0, left: 10, bottom: 0, right: 0)
+      button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 10)
     }
+    return button
+  }
 }
 
 class ImageViewFactory: UIComponent {

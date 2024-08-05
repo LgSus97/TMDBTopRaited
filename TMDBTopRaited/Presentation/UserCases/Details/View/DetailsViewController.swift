@@ -9,14 +9,14 @@ import UIKit
 
 class DetailsViewController: UIViewController {
   
-  var scrollView : UIScrollView = {
+  private var scrollView: UIScrollView = {
       var scrollView = UIScrollView()
       scrollView.backgroundColor = STColors.cleanWhite
       return scrollView
   }()
   
   
-  var optionTitle : UILabel = {
+  private var optionTitle: UILabel = {
     LabelFactory(
       textColor: STColors.oceanDeep,
       style: .bold,
@@ -25,7 +25,7 @@ class DetailsViewController: UIViewController {
     ).create() as! UILabel
   }()
   
-  var overViewLabel : UILabel = {
+  private var overViewLabel: UILabel = {
     LabelFactory(
       textColor: STColors.stormySea,
       style: .medium,
@@ -34,7 +34,7 @@ class DetailsViewController: UIViewController {
     ).create() as! UILabel
   }()
   
-  var releaseLabel : UILabel = {
+  private var releaseLabel: UILabel = {
     LabelFactory(
       textColor: STColors.stormySea,
       style: .regular,
@@ -42,7 +42,7 @@ class DetailsViewController: UIViewController {
     ).create() as! UILabel
   }()
   
-  var raitingLabel : UILabel = {
+  private var raitingLabel: UILabel = {
     LabelFactory(
       textColor: STColors.stormySea,
       style: .regular,
@@ -50,13 +50,20 @@ class DetailsViewController: UIViewController {
     ).create() as! UILabel
   }()
   
-  private var movieView : UIImageView = {
+  private var movieView: UIImageView = {
     var image = UIImageView()
     image.contentMode = .scaleAspectFit
     return image
   }()
   
-  var stackView : UIStackView = {
+  private var buttonMoview: UIButton = {
+    ButtonFactory(
+      withMessage: "Like",
+      iconName: "hand.thumbsup"
+    ).create() as! UIButton
+  }()
+  
+  var stackView: UIStackView = {
     var stack = UIStackView()
     stack.axis = .vertical
     stack.spacing = 8
@@ -121,10 +128,27 @@ class DetailsViewController: UIViewController {
       withAnchor: .top,
       relativeToView: movieView)
     
+    self.scrollView.addSubview(buttonMoview)
+    
+    self.buttonMoview.addAnchors(left: 80, top: 20, right: 80, bottom: nil,withAnchor: .top, relativeToView: stackView)
+    
     optionTitle.text = viewModel.title
     overViewLabel.text = viewModel.overview
     releaseLabel.text = viewModel.releaseDate
     raitingLabel.text = viewModel.voteAverage
+    
+    buttonMoview.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
   }
   
+  @objc func buttonPressed() {
+    buttonMoview.warningHaptic()
+    let doneButton = ModalHelperModel(title: "\(NSLocalizedString("Done", comment: ""))",
+                                        aceptAction:  {},
+                                        typeButton: .accept)
+    ModalHelper.showModalAlertDinamic(in: self,
+                                      title: "\(NSLocalizedString("TMDBApp", comment: ""))",
+                                      message: "\(NSLocalizedString("Like Movie", comment: ""))",
+                                      dismiss: false,
+                                      buttons: [doneButton])
+  }
 }
