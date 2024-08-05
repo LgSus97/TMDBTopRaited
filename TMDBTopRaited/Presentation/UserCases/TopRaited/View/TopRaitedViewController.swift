@@ -8,15 +8,15 @@
 import UIKit
 
 final class TopRaitedViewController: UIViewController {
-  
-  private var viewModel: MoviesListViewModel!
-  private var posterImagesRepository: PosterImagesRepository?
-  
+
   var tableView : UITableView = {
     var table = UITableView()
     table.backgroundColor = STColors.snowWhite
     return table
   }()
+  
+  private var viewModel: MoviesListViewModel!
+  private var posterImagesRepository: PosterImagesRepository?
   
   
   static func create(
@@ -37,7 +37,6 @@ final class TopRaitedViewController: UIViewController {
   }
   
   private func bind(to viewModel: MoviesListViewModel) {
-     // viewModel.items.observe(on: self) { [weak self] _ in self?.updateItems() }
     viewModel.reloadItems.observe(on: self) { [weak self] _ in self?.updateItems() }
   }
   
@@ -45,6 +44,7 @@ final class TopRaitedViewController: UIViewController {
     view.addSubview(tableView)
     tableView.dataSource = self
     tableView.delegate = self
+    tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: "MovieTableViewCell")
     tableView.addAnchorsWithMargin(0)
   }
   
@@ -65,13 +65,22 @@ extension TopRaitedViewController: UITableViewDataSource, UITableViewDelegate {
     print();print()
     printIfDebug("Movie: \(movie.title)")
     print();print()
-    let cell = MovieTableViewCell(moviesListItemViewModel: movie)
+    
+    guard let cell = tableView.dequeueReusableCell(withIdentifier: "MovieTableViewCell", for: indexPath) as? MovieTableViewCell else {
+        fatalError("Unable to dequeue MovieTableViewCell")
+    }
+  
+    cell.fill(with: viewModel.item(for: indexPath), posterImagesRepository: posterImagesRepository)
     cell.selectionStyle = .none
     
     if indexPath.row == viewModel.numberOfItems(in: indexPath.section) - 1 {
-           viewModel.didLoadNextPage()
-       }
-    
+      viewModel.didLoadNextPage()
+    }
+  
     return cell
+  }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    viewModel.didSelectItem(at: indexPath)
   }
 }

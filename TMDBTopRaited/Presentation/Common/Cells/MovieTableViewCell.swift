@@ -9,24 +9,26 @@ import UIKit
 
 class MovieTableViewCell: UITableViewCell {
   
-  var moviesListItemViewModel: MoviesListItemViewModel
-  
-  var deletePush:(() -> Void)?
-  
-  var action:(() -> Void)?
-  
-  var optionIcon : UIImageView = {
+  var movieView : UIImageView = {
     var image = UIImageView()
     image.contentMode = .scaleAspectFit
     return image
   }()
   
   var optionTitle : UILabel = {
-    LabelFactory(textColor: STColors.oceanDeep, style: .bold, fontSize: 18).create() as! UILabel
+    LabelFactory(
+      textColor: STColors.oceanDeep,
+      style: .bold,
+      fontSize: 20
+    ).create() as! UILabel
   }()
   
   var optionSubtitle : UILabel = {
-    LabelFactory(textColor: STColors.oceanDeep, style: .bold, fontSize: 18).create() as! UILabel
+    LabelFactory(
+      textColor: STColors.mistyBlue,
+      style: .semibold,
+      fontSize: 18
+    ).create() as! UILabel
   }()
   
   var optionContent : UIView = {
@@ -55,18 +57,36 @@ class MovieTableViewCell: UITableViewCell {
   let topLineView = UIView()
   let bottomLineView = UIView()
   
-  init(moviesListItemViewModel: MoviesListItemViewModel){
-    self.moviesListItemViewModel = moviesListItemViewModel
-    super.init(style: .default, reuseIdentifier: nil)
-    self.backgroundColor = .white
+  var viewModel: MoviesListItemViewModel?
+  var deletePush:(() -> Void)?
+  var action:(() -> Void)?
+  
+  private var posterImagesRepository: PosterImagesRepository?
+  private var imageLoadTask: Cancellable? { willSet { imageLoadTask?.cancel() } }
+  
+  
+  override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
     initUI()
-    setTapped()
+  }
+  
+  required init?(coder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
+  
+  
+  func fill(with viewModel: MoviesListItemViewModel, posterImagesRepository: PosterImagesRepository?) {
+    self.viewModel = viewModel
+    self.posterImagesRepository = posterImagesRepository
+    optionTitle.text = viewModel.title
+    optionSubtitle.text = viewModel.releaseDate
+    updatePosterImage(width: Int(movieView.imageSizeAfterAspectFit.scaledSize.width))
   }
   
   func initUI(){
     self.contentView.addSubview(optionContent)
     optionContent.addAnchorsWithMargin(10)
-    optionContent.addSubview(optionIcon)
+    optionContent.addSubview(movieView)
     
     stackView.addArrangedSubview(optionTitle)
     stackView.addArrangedSubview(optionSubtitle)
@@ -81,37 +101,31 @@ class MovieTableViewCell: UITableViewCell {
                                  bottom: nil,
                                  withAnchor: .left,
                                  relativeToView: stackView)
-    
-    optionIcon.addAnchorsAndSize(width: 36,
-                                 height: 36,
+        
+    movieView.addAnchorsAndSize(width: 120,
+                                 height: 120,
                                  left: 10,
                                  top: 10,
                                  right: nil,
-                                 bottom: nil)
+                                 bottom: 10)
     
     stackView.addAnchorsAndCenter(centerX: false,
                                   centerY: true,
                                   width: nil,
                                   height: nil,
                                   left: 15,
-                                  top: 10,
+                                  top: nil,
                                   right: 35,
-                                  bottom: 10, withAnchor: .left, relativeToView: optionIcon)
+                                  bottom: nil, withAnchor: .left, relativeToView: movieView)
     
     
     
     topLineView.backgroundColor = STColors.lightBreeze
     bottomLineView.backgroundColor = STColors.lightBreeze
     
-    // Añadir las líneas como subvistas a la celda
     self.addSubview(topLineView)
     self.addSubview(bottomLineView)
-    
-    
-    optionIcon.image = UIImage(systemName: "film.circle")
-    optionTitle.text = moviesListItemViewModel.title
-    optionSubtitle.text = moviesListItemViewModel.releaseDate
-    
+        
     iconDelete.image = UIImage(systemName: "star.circle.fill")
     
     let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(iconDeleteTapped))
@@ -128,25 +142,25 @@ class MovieTableViewCell: UITableViewCell {
     bottomLineView.frame = CGRect(x: lineMargin, y: self.bounds.height - lineWidth, width: self.bounds.width - 2 * lineMargin, height: lineWidth)
   }
   
+  private func updatePosterImage(width: Int) {
+    movieView.image = nil
+    guard let posterImagePath = viewModel?.posterImagePath else { return }
+    
+    imageLoadTask = posterImagesRepository?.fetchImage(with: posterImagePath, width: width) { [weak self] result in
+      guard let self = self else { return }
+      guard self.viewModel?.posterImagePath == posterImagePath else { return }
+      if case let .success(data) = result {
+        DispatchQueue.main.async {
+          self.movieView.image = UIImage(data: data)
+        }
+      }
+      self.imageLoadTask = nil
+    }
+  }
+  
   @objc func iconDeleteTapped() {
     debugPrint("\(#function)")
     deletePush?()
-  }
-  
-  required init?(coder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-  
-  func setTapped(){
-    let tap = UITapGestureRecognizer(target: self, action: #selector(MovieTableViewCell.tapFunction))
-    optionContent.isUserInteractionEnabled = true
-    optionContent.addGestureRecognizer(tap)
-  }
-  
-  @objc func tapFunction(){
-    if action != nil{
-      action!()
-    }
   }
   
 }

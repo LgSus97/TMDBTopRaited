@@ -43,7 +43,7 @@ class LabelFactory: UIComponent {
     let label = UILabel()
     label.text = withMessage
     label.textColor = textColor
-    label.font = UIFont(name: style.rawValue, size: fontSize) ?? UIFont.systemFont(ofSize: fontSize)
+    label.font = UIFont(name: style.rawValue, size: fontSize)
     label.numberOfLines = numberOfLines
     label.lineBreakMode = lineBreakMode
     label.textAlignment = textAlignment
