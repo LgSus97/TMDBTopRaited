@@ -31,12 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     appFlowCoordinator?.start()
     window?.makeKeyAndVisible()
     
-    // Code to print font names
-    for family in UIFont.familyNames.sorted() {
-        let names = UIFont.fontNames(forFamilyName: family)
-        print("Family: \(family) Font names: \(names)")
-    }
-    
     return true    
   }
 
