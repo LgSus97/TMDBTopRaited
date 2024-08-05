@@ -11,10 +11,10 @@ class DetailsViewController: UIViewController {
   
   private var topTitle: UILabel = {
    LabelFactory(
-     withMessage: "\(NSLocalizedString("Movies", comment: ""))",
+     withMessage: "\(NSLocalizedString("Deatails Movies", comment: ""))",
      textColor: STColors.cleanWhite,
      style: .bold,
-     fontSize: 20,
+     fontSize: 18,
      textAlignment: .center
    ).create() as! UILabel
  }()

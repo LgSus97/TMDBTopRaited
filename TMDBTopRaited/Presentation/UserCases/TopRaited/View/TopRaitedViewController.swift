@@ -14,7 +14,7 @@ final class TopRaitedViewController: UIViewController {
       withMessage: "\(NSLocalizedString("Movies", comment: ""))",
       textColor: STColors.cleanWhite,
       style: .bold,
-      fontSize: 20,
+      fontSize: 18,
       textAlignment: .center
     ).create() as! UILabel
   }()
