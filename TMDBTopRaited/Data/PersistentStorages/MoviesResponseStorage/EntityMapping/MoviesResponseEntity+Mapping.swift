@@ -16,10 +16,11 @@ extension MovieResponseEntity {
         return .init(
             id: Int(id),
             title: title,
-            genre: MoviesResponseDTO.MovieDTO.GenreDTO(rawValue: genre ?? ""),
-            posterPath: posterPath,
+            posterPath: posterPath, 
+            backdropPath: backdropPath,
             overview: overview,
-            releaseDate: releaseDate
+            releaseDate: releaseDate,
+            voteAverage: voteAverage
         )
     }
 }
@@ -49,7 +50,6 @@ extension MoviesResponseDTO.MovieDTO {
         let entity: MovieResponseEntity = .init(context: context)
         entity.id = Int64(id)
         entity.title = title
-        entity.genre = genre?.rawValue
         entity.posterPath = posterPath
         entity.overview = overview
         entity.releaseDate = releaseDate

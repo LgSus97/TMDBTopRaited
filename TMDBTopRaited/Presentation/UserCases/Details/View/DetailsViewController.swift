@@ -9,46 +9,60 @@ import UIKit
 
 class DetailsViewController: UIViewController {
   
+  var scrollView : UIScrollView = {
+      var scrollView = UIScrollView()
+      scrollView.backgroundColor = STColors.cleanWhite
+      return scrollView
+  }()
   
   
   var optionTitle : UILabel = {
     LabelFactory(
       textColor: STColors.oceanDeep,
       style: .bold,
-      fontSize: 20
+      fontSize: 20,
+      textAlignment: .center
     ).create() as! UILabel
   }()
   
-  var overViewTitle : UILabel = {
+  var overViewLabel : UILabel = {
     LabelFactory(
-      textColor: STColors.oceanDeep,
-      style: .bold,
-      fontSize: 20
+      textColor: STColors.stormySea,
+      style: .medium,
+      fontSize: 18,
+      textAlignment: .justified
     ).create() as! UILabel
   }()
   
-  var releaseTitle : UILabel = {
+  var releaseLabel : UILabel = {
     LabelFactory(
-      textColor: STColors.oceanDeep,
-      style: .bold,
-      fontSize: 20
+      textColor: STColors.stormySea,
+      style: .regular,
+      fontSize: 16
     ).create() as! UILabel
   }()
   
-  var raiting : UILabel = {
+  var raitingLabel : UILabel = {
     LabelFactory(
-      textColor: STColors.oceanDeep,
-      style: .bold,
-      fontSize: 20
+      textColor: STColors.stormySea,
+      style: .regular,
+      fontSize: 16
     ).create() as! UILabel
   }()
   
-  
-  var movieView : UIImageView = {
+  private var movieView : UIImageView = {
     var image = UIImageView()
     image.contentMode = .scaleAspectFit
     return image
   }()
+  
+  var stackView : UIStackView = {
+    var stack = UIStackView()
+    stack.axis = .vertical
+    stack.spacing = 8
+    return stack
+  }()
+  
   
   // MARK: - Lifecycle
   private var viewModel: MovieDetailsViewModel!
@@ -61,31 +75,56 @@ class DetailsViewController: UIViewController {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.view.backgroundColor = STColors.gentleMist
+    setupViews()
     bind(to: viewModel)
     // Do any additional setup after loading the view.
   }
   
   private func bind(to viewModel: MovieDetailsViewModel) {
-    //viewModel.posterImage.observe(on: self) { [weak self] in self?.posterImageView.image = $0.flatMap(UIImage.init) }
+    viewModel.posterImage.observe(on: self) { [weak self] in
+      guard let self = self else { return }
+      let image = $0.flatMap(UIImage.init)
+      DispatchQueue.main.async {
+        self.movieView.image = image
+      }
+    }
   }
   
   override func viewDidLayoutSubviews() {
       super.viewDidLayoutSubviews()
-      //viewModel.updatePosterImage(width: Int(posterImageView.imageSizeAfterAspectFit.scaledSize.width))
-  }
-  
-  func initUI() {
-    
+      viewModel.updatePosterImage(width: Int(movieView.imageSizeAfterAspectFit.scaledSize.width))
   }
   
   // MARK: - Private
-
   private func setupViews() {
-      title = viewModel.title
-//      overviewTextView.text = viewModel.overview
-//      posterImageView.isHidden = viewModel.isPosterImageHidden
-      view.accessibilityIdentifier = AccessibilityIdentifier.movieDetailsView
+    view.addSubview(scrollView)
+    scrollView.addAnchorsWithMargin(0)
+    self.scrollView.addSubview(movieView)
+    movieView.addAnchorsAndSize(
+      width: width - 20,
+      height: height/3,
+      left: 10,
+      top: 10,
+      right: 10,
+      bottom: nil)
+    self.scrollView.addSubview(stackView)
+    
+    let labels = [optionTitle, overViewLabel, releaseLabel, raitingLabel]
+    for label in labels {
+        stackView.addArrangedSubview(label)
+    }
+    self.stackView.addAnchors(
+      left: 20,
+      top: 10,
+      right: 20,
+      bottom: nil,
+      withAnchor: .top,
+      relativeToView: movieView)
+    
+    optionTitle.text = viewModel.title
+    overViewLabel.text = viewModel.overview
+    releaseLabel.text = viewModel.releaseDate
+    raitingLabel.text = viewModel.voteAverage
   }
   
 }

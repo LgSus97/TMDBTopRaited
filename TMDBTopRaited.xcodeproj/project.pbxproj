@@ -47,7 +47,6 @@
 		0350114A2C5F1987002048FA /* NetworkConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0350110C2C5F1987002048FA /* NetworkConfig.swift */; };
 		0350114B2C5F1987002048FA /* TopRaitedViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035011122C5F1987002048FA /* TopRaitedViewModel.swift */; };
 		0350114C2C5F1987002048FA /* MoviesListItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035011132C5F1987002048FA /* MoviesListItemViewModel.swift */; };
-		0350114F2C5F1987002048FA /* AccessibilityIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 035011182C5F1987002048FA /* AccessibilityIdentifier.swift */; };
 		035011532C5F1987002048FA /* Observable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0350111D2C5F1987002048FA /* Observable.swift */; };
 		035011542C5F1987002048FA /* Alertable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0350111F2C5F1987002048FA /* Alertable.swift */; };
 		035011562C5F1987002048FA /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 035011222C5F1987002048FA /* Localizable.strings */; };
@@ -144,7 +143,6 @@
 		0350110C2C5F1987002048FA /* NetworkConfig.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkConfig.swift; sourceTree = "<group>"; };
 		035011122C5F1987002048FA /* TopRaitedViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopRaitedViewModel.swift; sourceTree = "<group>"; };
 		035011132C5F1987002048FA /* MoviesListItemViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MoviesListItemViewModel.swift; sourceTree = "<group>"; };
-		035011182C5F1987002048FA /* AccessibilityIdentifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessibilityIdentifier.swift; sourceTree = "<group>"; };
 		0350111D2C5F1987002048FA /* Observable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observable.swift; sourceTree = "<group>"; };
 		0350111F2C5F1987002048FA /* Alertable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Alertable.swift; sourceTree = "<group>"; };
 		035011232C5F1987002048FA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -536,7 +534,6 @@
 			isa = PBXGroup;
 			children = (
 				035011712C5F58CD002048FA /* Colors.swift */,
-				035011182C5F1987002048FA /* AccessibilityIdentifier.swift */,
 				035011192C5F1987002048FA /* Extensions */,
 				0350111D2C5F1987002048FA /* Observable.swift */,
 				0350111E2C5F1987002048FA /* Protocols */,
@@ -836,7 +833,6 @@
 				0350116A2C5F1DE8002048FA /* DataTransferError+ConnectionError.swift in Sources */,
 				035011432C5F1987002048FA /* UserDefaultsMoviesQueriesStorage.swift in Sources */,
 				0350115B2C5F1BE3002048FA /* AppFlowCoordinator.swift in Sources */,
-				0350114F2C5F1987002048FA /* AccessibilityIdentifier.swift in Sources */,
 				0350113F2C5F1987002048FA /* CoreDataMoviesResponseStorage.swift in Sources */,
 				0350114A2C5F1987002048FA /* NetworkConfig.swift in Sources */,
 				035011572C5F1987002048FA /* DispatchQueueType.swift in Sources */,

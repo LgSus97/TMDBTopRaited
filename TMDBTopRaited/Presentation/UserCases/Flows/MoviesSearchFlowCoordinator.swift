@@ -20,7 +20,6 @@ final class MoviesSearchFlowCoordinator {
   }
   
   func start() {
-    // Note: here we keep strong reference with actions, this way this flow do not need to be strong referenced
     let closures = MoviesListViewModelClosures(showMovieDetails: showMovieDetails)
     let vc = dependencies.makeMoviesListViewController(closures: closures)
     navigationController?.pushViewController(vc, animated: false)
@@ -28,6 +27,8 @@ final class MoviesSearchFlowCoordinator {
   
   private func showMovieDetails(movie: Movie) {
     let vc = dependencies.makeMoviesDetailsViewController(movie: movie)
+    vc.modalTransitionStyle = .partialCurl
+    vc.modalPresentationStyle = .overCurrentContext
     navigationController?.pushViewController(vc, animated: true)
   }
 }

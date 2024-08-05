@@ -12,6 +12,7 @@ final class TopRaitedViewController: UIViewController {
   var tableView : UITableView = {
     var table = UITableView()
     table.backgroundColor = STColors.snowWhite
+    table.decelerationRate = UIScrollView.DecelerationRate(rawValue: 0.90)
     return table
   }()
   
