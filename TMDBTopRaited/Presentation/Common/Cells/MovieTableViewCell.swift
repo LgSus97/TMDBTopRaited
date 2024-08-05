@@ -38,15 +38,6 @@ class MovieTableViewCell: UITableViewCell {
     return view
   }()
   
-  
-  var iconDelete : UIImageView = {
-    var image = UIImageView()
-    image.contentMode = .scaleAspectFit
-    image.isUserInteractionEnabled = true
-    return image
-  }()
-  
-  
   var stackView : UIStackView = {
     var stack = UIStackView()
     stack.axis = .vertical
@@ -58,9 +49,6 @@ class MovieTableViewCell: UITableViewCell {
   let bottomLineView = UIView()
   
   var viewModel: MoviesListItemViewModel?
-  var deletePush:(() -> Void)?
-  var action:(() -> Void)?
-  
   private var posterImagesRepository: PosterImagesRepository?
   private var imageLoadTask: Cancellable? { willSet { imageLoadTask?.cancel() } }
   
@@ -73,7 +61,6 @@ class MovieTableViewCell: UITableViewCell {
   required init?(coder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
-  
   
   func fill(with viewModel: MoviesListItemViewModel, posterImagesRepository: PosterImagesRepository?) {
     self.viewModel = viewModel
@@ -91,16 +78,6 @@ class MovieTableViewCell: UITableViewCell {
     stackView.addArrangedSubview(optionTitle)
     stackView.addArrangedSubview(optionSubtitle)
     optionContent.addSubview(stackView)
-    optionContent.addSubview(iconDelete)
-    
-    iconDelete.addAnchorsAndSize(width: 24,
-                                 height: 24,
-                                 left: 5,
-                                 top: 10,
-                                 right: 5,
-                                 bottom: nil,
-                                 withAnchor: .left,
-                                 relativeToView: stackView)
         
     movieView.addAnchorsAndSize(width: 120,
                                  height: 120,
@@ -126,10 +103,6 @@ class MovieTableViewCell: UITableViewCell {
     self.addSubview(topLineView)
     self.addSubview(bottomLineView)
         
-    iconDelete.image = UIImage(systemName: "star.circle.fill")
-    
-    let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(iconDeleteTapped))
-    iconDelete.addGestureRecognizer(tapGestureRecognizer)
   }
   
   override func layoutSubviews() {
@@ -156,11 +129,6 @@ class MovieTableViewCell: UITableViewCell {
       }
       self.imageLoadTask = nil
     }
-  }
-  
-  @objc func iconDeleteTapped() {
-    debugPrint("\(#function)")
-    deletePush?()
   }
   
 }

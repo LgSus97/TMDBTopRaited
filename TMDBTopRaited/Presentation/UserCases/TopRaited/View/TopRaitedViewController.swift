@@ -57,16 +57,11 @@ final class TopRaitedViewController: UIViewController {
 
 extension TopRaitedViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    print("Movie total: \(viewModel.numberOfItems(in: section))")
     return viewModel.numberOfItems(in: section)
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let movie = viewModel.item(for: indexPath)
-    print();print()
-    printIfDebug("Movie: \(movie.title)")
-    print();print()
-    
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "MovieTableViewCell", for: indexPath) as? MovieTableViewCell else {
         fatalError("Unable to dequeue MovieTableViewCell")
     }

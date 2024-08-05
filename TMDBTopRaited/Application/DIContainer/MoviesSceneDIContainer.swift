@@ -10,7 +10,6 @@ import UIKit
 
 final class MoviesSceneDIContainer: MoviesSearchFlowCoordinatorDependencies {
 
-      
     struct Dependencies {
         let apiDataTransferService: DataTransferService
         let imageDataTransferService: DataTransferService
@@ -19,7 +18,6 @@ final class MoviesSceneDIContainer: MoviesSearchFlowCoordinatorDependencies {
     private let dependencies: Dependencies
 
     // MARK: - Persistent Storage
-    lazy var moviesQueriesStorage: MoviesQueriesStorage = CoreDataMoviesQueriesStorage(maxStorageLimit: 10)
     lazy var moviesResponseCache: MoviesResponseStorage = CoreDataMoviesResponseStorage()
 
     init(dependencies: Dependencies) {
@@ -29,22 +27,10 @@ final class MoviesSceneDIContainer: MoviesSearchFlowCoordinatorDependencies {
     // MARK: - Use Cases
     func makeSearchMoviesUseCase() -> SearchMoviesUseCase {
         DefaultSearchMoviesUseCase(
-            moviesRepository: makeMoviesRepository(),
-            moviesQueriesRepository: makeMoviesQueriesRepository()
+            moviesRepository: makeMoviesRepository()
         )
     }
-    
-    func makeFetchRecentMovieQueriesUseCase(
-        requestValue: FetchRecentMovieQueriesUseCase.RequestValue,
-        completion: @escaping (FetchRecentMovieQueriesUseCase.ResultValue) -> Void
-    ) -> UseCase {
-        FetchRecentMovieQueriesUseCase(
-            requestValue: requestValue,
-            completion: completion,
-            moviesQueriesRepository: makeMoviesQueriesRepository()
-        )
-    }
-    
+        
     // MARK: - Repositories
     func makeMoviesRepository() -> MoviesRepository {
         DefaultMoviesRepository(
@@ -52,11 +38,7 @@ final class MoviesSceneDIContainer: MoviesSearchFlowCoordinatorDependencies {
             cache: moviesResponseCache
         )
     }
-    func makeMoviesQueriesRepository() -> MoviesQueriesRepository {
-        DefaultMoviesQueriesRepository(
-            moviesQueriesPersistentStorage: moviesQueriesStorage
-        )
-    }
+
     func makePosterImagesRepository() -> PosterImagesRepository {
         DefaultPosterImagesRepository(
             dataTransferService: dependencies.imageDataTransferService
