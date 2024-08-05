@@ -1,16 +1,14 @@
-/* 
-  Localizable.strings
-  App
 
-  Created by Oleh Kudinov on 01.12.19.
-  
-*/
 
-"Movies" = "Películas";
-"Search results" = "Resultados de búsqueda";
-"Release Date" = "Fecha de lanzamiento";
-"To be announced" = "Para ser anunciado";
+"Movies" = "Películas Mejor Calificadas";
+"Deatails Movies" = "Detalles";
+"Raiting" = "Calificación";
+"Release Date" = "Fecha lanzamiento";
+"To be announced" = "Por ser anunciado";
 "Error" = "Error";
-"No internet connection" = "Sin conexión a internet";
-"Failed loading movies" = "Error al descargar películas";
-"Search Movies" = "Buscar películas";
+"Like" = "Like";
+"Like Movie" = "Movie was added to like list (this copy is only for simulate action)";
+"Done" = "Done";
+"TMDBApp" = "TMDBApp";
+"No internet connection" = "No hay conexión a internet";
+"Failed loading movies" = "Error al cargar películas";

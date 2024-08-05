@@ -1,14 +1,14 @@
 import Foundation
 
-protocol SearchMoviesUseCase {
+protocol TopMoviesUseCase {
     func execute(
-        requestValue: SearchMoviesUseCaseRequestValue,
+        requestValue: TopMoviesUseCaseRequestValue,
         cached: @escaping (MoviesPage) -> Void,
         completion: @escaping (Result<MoviesPage, Error>) -> Void
     ) -> Cancellable?
 }
 
-final class DefaultSearchMoviesUseCase: SearchMoviesUseCase {
+final class DefaultTopMoviesUseCase: TopMoviesUseCase {
 
     private let moviesRepository: MoviesRepository
 
@@ -20,7 +20,7 @@ final class DefaultSearchMoviesUseCase: SearchMoviesUseCase {
     }
 
     func execute(
-        requestValue: SearchMoviesUseCaseRequestValue,
+        requestValue: TopMoviesUseCaseRequestValue,
         cached: @escaping (MoviesPage) -> Void,
         completion: @escaping (Result<MoviesPage, Error>) -> Void
     ) -> Cancellable? {
@@ -34,6 +34,6 @@ final class DefaultSearchMoviesUseCase: SearchMoviesUseCase {
     }
 }
 
-struct SearchMoviesUseCaseRequestValue {
+struct TopMoviesUseCaseRequestValue {
     let page: Int
 }

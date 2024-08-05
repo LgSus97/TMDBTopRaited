@@ -24,7 +24,6 @@ protocol MoviesListViewModelInput {
 }
 
 protocol MoviesListViewModelOutput {
-  var loading: Observable<MoviesListViewModelLoading?> { get }
   var error: Observable<String> { get }
   var isEmpty: Bool { get }
   var screenTitle: String { get }
@@ -38,7 +37,7 @@ typealias MoviesListViewModel = MoviesListViewModelInput & MoviesListViewModelOu
 
 final class DefaultMoviesListViewModel: MoviesListViewModel {
   
-  private let searchMoviesUseCase: SearchMoviesUseCase
+  private let topMoviesUseCase: TopMoviesUseCase
   private let closures: MoviesListViewModelClosures?
   
   var currentPage: Int = 0
@@ -51,7 +50,6 @@ final class DefaultMoviesListViewModel: MoviesListViewModel {
   private let mainQueue: DispatchQueueType
   
   // MARK: - OUTPUT
-  var loading: Observable<MoviesListViewModelLoading?> = Observable(.none)
   var error: Observable<String> = Observable("")
   var isEmpty: Bool { return pages.movies.isEmpty }
   let screenTitle = NSLocalizedString("Movies", comment: "")
@@ -60,11 +58,11 @@ final class DefaultMoviesListViewModel: MoviesListViewModel {
   // MARK: - Init
   
   init(
-    searchMoviesUseCase: SearchMoviesUseCase,
+    topMoviesUseCase: TopMoviesUseCase,
     closures: MoviesListViewModelClosures? = nil,
     mainQueue: DispatchQueueType = DispatchQueue.main
   ) {
-    self.searchMoviesUseCase = searchMoviesUseCase
+    self.topMoviesUseCase = topMoviesUseCase
     self.closures = closures
     self.mainQueue = mainQueue
   }
@@ -86,10 +84,8 @@ final class DefaultMoviesListViewModel: MoviesListViewModel {
     pages = []
   }
   
-  private func load(loading: MoviesListViewModelLoading) {
-    self.loading.value = loading
-    
-    moviesLoadTask = searchMoviesUseCase.execute(
+  private func load() {
+    moviesLoadTask = topMoviesUseCase.execute(
       requestValue: .init(page: nextPage),
       cached: { [weak self] page in
         self?.mainQueue.async {
@@ -104,7 +100,6 @@ final class DefaultMoviesListViewModel: MoviesListViewModel {
           case .failure(let error):
             self?.handle(error: error)
           }
-          self?.loading.value = .none
         }
       }
     )
@@ -118,7 +113,7 @@ final class DefaultMoviesListViewModel: MoviesListViewModel {
   
   private func update() {
     resetPages()
-    load(loading: .fullScreen)
+    load()
   }
   
   // MARK: - INPUT. View event methods
@@ -128,8 +123,8 @@ final class DefaultMoviesListViewModel: MoviesListViewModel {
   }
   
   func didLoadNextPage() {
-    guard hasMorePages, loading.value == .none else { return }
-    load(loading: .nextPage)
+    guard hasMorePages else { return }
+    load()
   }
   
   func didRetrieveMovies() {

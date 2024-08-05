@@ -9,6 +9,16 @@ import UIKit
 
 class DetailsViewController: UIViewController {
   
+  private var topTitle: UILabel = {
+   LabelFactory(
+     withMessage: "\(NSLocalizedString("Movies", comment: ""))",
+     textColor: STColors.cleanWhite,
+     style: .bold,
+     fontSize: 20,
+     textAlignment: .center
+   ).create() as! UILabel
+ }()
+  
   private var scrollView: UIScrollView = {
       var scrollView = UIScrollView()
       scrollView.backgroundColor = STColors.cleanWhite
@@ -104,6 +114,7 @@ class DetailsViewController: UIViewController {
   
   // MARK: - Private
   private func setupViews() {
+    self.navigationItem.titleView = topTitle
     view.addSubview(scrollView)
     scrollView.addAnchorsWithMargin(0)
     self.scrollView.addSubview(movieView)

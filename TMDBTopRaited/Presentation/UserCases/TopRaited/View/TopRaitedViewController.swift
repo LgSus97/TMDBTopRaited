@@ -8,8 +8,18 @@
 import UIKit
 
 final class TopRaitedViewController: UIViewController {
-
-  var tableView : UITableView = {
+  
+   private var topTitle: UILabel = {
+    LabelFactory(
+      withMessage: "\(NSLocalizedString("Movies", comment: ""))",
+      textColor: STColors.cleanWhite,
+      style: .bold,
+      fontSize: 20,
+      textAlignment: .center
+    ).create() as! UILabel
+  }()
+  
+  private var tableView : UITableView = {
     var table = UITableView()
     table.backgroundColor = STColors.snowWhite
     table.decelerationRate = UIScrollView.DecelerationRate(rawValue: 0.90)
@@ -42,6 +52,7 @@ final class TopRaitedViewController: UIViewController {
   }
   
   private func setUI() {
+    self.navigationItem.titleView = topTitle
     view.addSubview(tableView)
     tableView.dataSource = self
     tableView.delegate = self
@@ -61,7 +72,6 @@ extension TopRaitedViewController: UITableViewDataSource, UITableViewDelegate {
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let movie = viewModel.item(for: indexPath)
     guard let cell = tableView.dequeueReusableCell(withIdentifier: "MovieTableViewCell", for: indexPath) as? MovieTableViewCell else {
         fatalError("Unable to dequeue MovieTableViewCell")
     }

@@ -1,20 +1,20 @@
 import UIKit
 
-protocol MoviesSearchFlowCoordinatorDependencies  {
+protocol TopMoviesFlowCoordinatorDependencies  {
   func makeMoviesListViewController(
     closures: MoviesListViewModelClosures
   ) -> TopRaitedViewController
   func makeMoviesDetailsViewController(movie: Movie) -> UIViewController
 }
 
-final class MoviesSearchFlowCoordinator {
+final class TopMoviesFlowCoordinator {
   
   private weak var navigationController: UINavigationController?
-  private let dependencies: MoviesSearchFlowCoordinatorDependencies
+  private let dependencies: TopMoviesFlowCoordinatorDependencies
   private weak var moviesListVC: TopRaitedViewController?
   
   init(navigationController: UINavigationController,
-       dependencies: MoviesSearchFlowCoordinatorDependencies) {
+       dependencies: TopMoviesFlowCoordinatorDependencies) {
     self.navigationController = navigationController
     self.dependencies = dependencies
   }
